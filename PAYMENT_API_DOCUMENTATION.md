@@ -264,14 +264,13 @@ async function submitPayment(paymentData) {
       return submitPayment(paymentData); // Retry
     }
 
-    if (response.status === 409) {
-      // Duplicate transaction - already processed
-      console.log(`Transaction already exists: ${result.existing_name}`);
-      return { success: true, transactionId: result.existing_name };
-    }
-
-    if (result.status == "ERROR") {
-      throw new Error(result.message || result.error);
+    if (result.status === "ERROR") {
+      // Optionally handle duplicate transaction
+      if (result.errorCode === "DUPLICATE_TRANSACTION") {
+        console.warn("Duplicate transaction detected.");
+        // You may want to return a special value or handle accordingly
+      }
+      throw new Error(result.details || result.message || result.errorCode);
     }
 
     return { success: true, transactionId: result.solErpTransactionId };
