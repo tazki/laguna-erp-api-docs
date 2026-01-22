@@ -118,7 +118,12 @@ Content-Type: application/json
 {
   "status": "SUCCESS",
   "message": "Payment received and recorded successfully.",
-  "solErpTransactionId": "PAY-TXN-2026-00001"
+  "solErpTransactionId": "SOL-2023-07-000987",
+  "officialReceiptNo": "OAR-2023-07-00456",
+  "fundCode": "TF",
+  "collectingEntity": "Province of Laguna",
+  "postingDate": "2023-07-07",
+  "journalReference": "CRJ-2023-07-01589"
 }
 ```
 
@@ -218,7 +223,12 @@ curl -X POST "{Base_URL}/api/method/erpnext.custom_payment_api.create_payment_tr
 {
   "status": "SUCCESS",
   "message": "Payment received and recorded successfully.",
-  "solErpTransactionId": "PAY-TXN-2026-00001"
+  "solErpTransactionId": "SOL-2023-07-000987",
+  "officialReceiptNo": "OAR-2023-07-00456",
+  "fundCode": "TF",
+  "collectingEntity": "Province of Laguna",
+  "postingDate": "2023-07-07",
+  "journalReference": "CRJ-2023-07-01589"
 }
 ```
 
