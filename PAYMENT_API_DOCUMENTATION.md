@@ -35,7 +35,7 @@ Content-Type: application/json
 
 ```json
 {
-  "success": true,
+  "status": "SUCCESS",
   "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9",
   "token_type": "Bearer",
   "expires_in": 86400
@@ -46,8 +46,9 @@ Content-Type: application/json
 
 ```json
 {
-  "success": false,
-  "error": "Invalid API credentials"
+  "status": "ERROR",
+  "message": "Invalid API credentials",
+  "errorCode": "VALIDATION_ERROR"
 }
 ```
 
@@ -115,15 +116,17 @@ Content-Type: application/json
 
 ```json
 {
-  "success": true,
-  "name": "PAY-TXN-2026-00001"
+  "status": "SUCCESS",
+  "message": "Payment received and recorded successfully.",
+  "solErpTransactionId": "PAY-TXN-2026-00001"
 }
 ```
 
 **Fields:**
 
-- `success`: Boolean indicating operation success
-- `name`: System-generated Payment Transaction ID in Laguna ERP
+- `status`: SUCCESS or ERROR
+- `message`: response message
+- `solErpTransactionId`: System-generated Payment Transaction ID in Laguna ERP
 
 ---
 
@@ -131,9 +134,10 @@ Content-Type: application/json
 
 ```json
 {
-  "success": false,
-  "error": "VALIDATION_ERROR",
-  "message": "TransactionGuid is required"
+  "status": "ERROR",
+  "message": "Invalid or incomplete payment data.",
+  "errorCode": "VALIDATION_ERROR",
+  "details": "Required field(s) missing: TransactionGuid"
 }
 ```
 
@@ -143,11 +147,10 @@ Content-Type: application/json
 
 ```json
 {
-  "success": false,
-  "error": "DUPLICATE_TRANSACTION",
+  "status": "ERROR",
   "message": "Duplicate transaction detected.",
-  "details": "TransactionGuid already exists: PAY-TXN-2026-00001",
-  "existing_name": "PAY-TXN-2026-00001"
+  "errorCode": "DUPLICATE_TRANSACTION",
+  "details": "TransactionGuid already exists in SOL ERP+."
 }
 ```
 
@@ -159,9 +162,10 @@ Content-Type: application/json
 
 ```json
 {
-  "success": false,
-  "error": "AUTHENTICATION_REQUIRED",
-  "message": "Authentication required"
+  "status": "ERROR",
+  "message": "Authentication required",
+  "errorCode": "AUTHENTICATION_REQUIRED",
+  "details": "Authorization header is missing or invalid."
 }
 ```
 
@@ -212,8 +216,9 @@ curl -X POST "{Base_URL}/api/method/erpnext.custom_payment_api.create_payment_tr
 
 ```json
 {
-  "success": true,
-  "name": "PAY-TXN-2026-00001"
+  "status": "SUCCESS",
+  "message": "Payment received and recorded successfully.",
+  "solErpTransactionId": "PAY-TXN-2026-00001"
 }
 ```
 
@@ -265,11 +270,11 @@ async function submitPayment(paymentData) {
       return { success: true, transactionId: result.existing_name };
     }
 
-    if (!result.success) {
+    if (result.status == "ERROR") {
       throw new Error(result.message || result.error);
     }
 
-    return { success: true, transactionId: result.name };
+    return { success: true, transactionId: result.solErpTransactionId };
   } catch (error) {
     console.error("Payment submission failed:", error);
     throw error;
