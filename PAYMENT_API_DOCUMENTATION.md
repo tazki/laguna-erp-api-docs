@@ -118,7 +118,7 @@ Content-Type: application/json
 {
   "status": "SUCCESS",
   "message": "Payment received and recorded successfully.",
-  "TransactionGuid": "550e8400-e29b-41d4-a716-446655440001",
+  "transactionGuid": "550e8400-e29b-41d4-a716-446655440001",
   "solErpTransactionId": "SOL-2023-07-000987",
   "officialReceiptNo": "OAR-2023-07-00456",
   "fundCode": "TF",
