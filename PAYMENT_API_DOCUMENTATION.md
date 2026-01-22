@@ -122,7 +122,7 @@ Content-Type: application/json
   "officialReceiptNo": "OAR-2023-07-00456",
   "fundCode": "TF",
   "collectingEntity": "Province of Laguna",
-  "postingDate": "2023-07-07",
+  "postingDate": "2023-07-07 09:00:00",
   "journalReference": "CRJ-2023-07-01589"
 }
 ```
@@ -227,7 +227,7 @@ curl -X POST "{Base_URL}/api/method/erpnext.custom_payment_api.create_payment_tr
   "officialReceiptNo": "OAR-2023-07-00456",
   "fundCode": "TF",
   "collectingEntity": "Province of Laguna",
-  "postingDate": "2023-07-07",
+  "postingDate": "2023-07-07 09:00:00",
   "journalReference": "CRJ-2023-07-01589"
 }
 ```
